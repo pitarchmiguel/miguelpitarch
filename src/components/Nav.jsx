@@ -15,13 +15,13 @@ export default function Nav() {
   return (
     <nav className="top" ref={navRef}>
       <div className="wrap inner">
-        <a href="#" className="logo">Miguel<span className="dot"></span><em>Pitarch</em></a>
+        <a href="#" className="logo" data-magnetic>Miguel<span className="dot"></span><em>Pitarch</em></a>
         <div className="nav-links">
           <a href="#services">Services</a>
           <a href="#work">Work</a>
           <a href="#process">Process</a>
           <a href="#faq">FAQ</a>
-          <a href="#contact" className="cta">Start a project →</a>
+          <a href="#contact" className="cta" data-magnetic>Start a project →</a>
         </div>
       </div>
     </nav>
