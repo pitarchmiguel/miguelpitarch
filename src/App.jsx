@@ -9,6 +9,7 @@ import Testimonials from './components/Testimonials'
 import Faq from './components/Faq'
 import Contact from './components/Contact'
 import InfoStrip from './components/InfoStrip'
+import SiteExperience from './components/SiteExperience'
 
 export default function App() {
   // Scroll-reveal: fade/slide elements in, and run the hero's line-by-line reveal.
@@ -28,8 +29,17 @@ export default function App() {
 
   return (
     <>
+      <SiteExperience />
       <Nav />
       <Hero />
+
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee__track">
+          <span>Web design <i>·</i> Landing pages <i>·</i> Visual identity <i>·</i> Hand-coded <i>·</i> Lighthouse 100 <i>·</i>&nbsp;</span>
+          <span>Web design <i>·</i> Landing pages <i>·</i> Visual identity <i>·</i> Hand-coded <i>·</i> Lighthouse 100 <i>·</i>&nbsp;</span>
+        </div>
+      </div>
+
       <Services />
       <Process />
       <Work />

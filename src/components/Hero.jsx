@@ -1,6 +1,9 @@
+import HeroCanvas from './HeroCanvas'
+
 export default function Hero() {
   return (
     <header className="hero">
+      <HeroCanvas />
       <div className="wrap">
         <div className="hero-tag">
           <span className="mono">Est. MMXXIII</span>
@@ -19,25 +22,25 @@ export default function Hero() {
                 I design and build <strong>high-conversion landing pages</strong> for small businesses, indie founders and studios — pages that feel considered, load in a blink, and actually move the needle.
               </p>
               <div className="hero-cta-row reveal" data-d="3">
-                <a href="#contact" className="btn btn-primary">
+                <a href="#contact" className="btn btn-primary" data-magnetic>
                   Book a project <span className="arrow">→</span>
                 </a>
-                <a href="#work" className="btn btn-ghost">View recent work</a>
+                <a href="#work" className="btn btn-ghost" data-magnetic>View recent work</a>
               </div>
             </div>
 
             <div className="hero-meta reveal" data-d="3">
               <div className="hero-stats">
                 <div className="stat">
-                  <div className="num">48<em>.</em></div>
+                  <div className="num"><span data-count="48">48</span><em>.</em></div>
                   <div className="lbl">Projects shipped</div>
                 </div>
                 <div className="stat">
-                  <div className="num">2<em>×</em></div>
+                  <div className="num"><span data-count="2">2</span><em>×</em></div>
                   <div className="lbl">Avg. lift in signups</div>
                 </div>
                 <div className="stat">
-                  <div className="num">14<em>d</em></div>
+                  <div className="num"><span data-count="14">14</span><em>d</em></div>
                   <div className="lbl">Typical turnaround</div>
                 </div>
               </div>
