@@ -35,7 +35,7 @@ export default function App() {
           </div>
             <h2 className="font-semibold md:mt-10 mt-8 md:text-2xl">Transformando ideas en experiencias alucinantes.</h2>
             <h3 className="font-semibold md:mt-10 mt-5 text-1xl">¿Hablamos?</h3>
-            <p>hola@miguelpitarch.com</p>
+            <p>hello@miguelpitarch.com</p>
         </aside>
 
         <section className="flex-1 h-screen overflow-y-auto mt-5">
