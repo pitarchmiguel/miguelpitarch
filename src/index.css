@@ -7,3 +7,24 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}h1{transform:none}}
 .reveal{opacity:.25;transform:translateY(28px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}.reveal.in-view{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+
+/* Contact and process */
+.skip-link{position:fixed;left:20px;top:16px;z-index:20;background:var(--foreground);color:white;padding:14px 20px;transform:translateY(-180%)}
+.skip-link:focus{transform:translateY(0)}
+.hero-intro{max-width:390px}
+.project-link{display:inline-flex;align-items:center;gap:28px;background:var(--primary);color:white;margin-top:20px;padding:15px 20px;font-size:15px;font-weight:600;transition:background .2s}
+.project-link:hover{background:#0b5147}
+.project-link:focus-visible{outline-color:var(--foreground)}
+.process h2{font-weight:500;font-size:clamp(36px,4.8vw,74px);letter-spacing:-.055em;line-height:1.12;margin:80px 0 60px}
+.process h2 em{font-family:Georgia,serif;font-weight:400;color:var(--primary)}
+.process-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px}
+.process-list li{border-top:1px solid var(--border);padding-top:22px}
+.process-number{font-size:13px;color:var(--primary)}
+.process-list h3{font-size:22px;line-height:1.25;letter-spacing:-.03em;margin:28px 0 16px}
+.process-list p{font-size:16px;line-height:1.65;color:#585b55;margin:0}
+.contact>p.contact-intro{font-size:17px;line-height:1.6;max-width:510px;margin:0 0 38px}
+@media(max-width:1000px){.process-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:38px 28px}}
+@media(max-width:700px){.nav nav{gap:16px}.nav nav>a[href="#proceso"]{display:none}.hero-intro{grid-column:1 / -1;grid-row:2;max-width:100%}.hero-intro .hero-description{max-width:100%}.project-link{margin-top:18px;min-height:48px}.process h2{margin:60px 0 40px}.process-list{grid-template-columns:1fr;gap:30px}.process-list h3{margin-top:16px}.contact>p.contact-intro{font-size:16px}.contact-link{min-height:44px;display:inline-flex;align-items:center}}
+
+.arrow-icon{display:inline-block;width:1em;height:1em;vertical-align:middle}
+.small-mark .arrow-icon{transform:rotate(90deg)}
