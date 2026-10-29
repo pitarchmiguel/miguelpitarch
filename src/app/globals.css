@@ -256,3 +256,53 @@ h1, h2, h3 { font-weight: 400; letter-spacing: -.045em; }
   .circle-button { translate: none; }
   .project-row:hover h3 { transform: none; }
 }
+
+/* Video reference: separate, delayed viewport layers for project artwork/cursor. */
+.preview-layer { position: fixed; inset: 0; contain: paint; z-index: 25; pointer-events: none; }
+.floating-project-image, .floating-project-cursor { position: fixed; left: 0; top: 0; pointer-events: none; visibility: hidden; z-index: 25; transition: visibility 0s .4s; }
+.floating-project-image { width: clamp(240px, 27.5vw, 420px); aspect-ratio: 1; }
+.preview-window { width: 100%; height: 100%; overflow: hidden; opacity: 0; transform: translate(-50%, -50%) scale(.65); transition: opacity .25s, transform .45s cubic-bezier(.22,1,.36,1); }
+.preview-strip { display: flex; flex-direction: column; height: 100%; transition: transform .6s cubic-bezier(.65,0,.35,1); }
+.preview-slide { width: 100%; height: 100%; flex-shrink: 0; }
+.preview-slide img { width: 100%; height: 100%; object-fit: cover; }
+.floating-project-image.is-active, .floating-project-cursor.is-active { visibility: visible; transition-delay: 0s; }
+.floating-project-image.is-active .preview-window { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+.floating-project-cursor { z-index: 26; }
+.floating-project-cursor > span { display: grid; place-items: center; width: clamp(65px, 5.5vw, 90px); aspect-ratio: 1; border-radius: 50%; background: var(--blue); color: white; font-size: 14px; opacity: 0; transform: translate(-50%,-50%) scale(0); transition: opacity .2s, transform .35s cubic-bezier(.22,1,.36,1); }
+.floating-project-cursor.is-active > span { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+.floating-project-cursor.is-pressed > span { transform: translate(-50%,-50%) scale(.8); }
+.magnetic-label { position: relative; z-index: 1; display: inline-flex; gap: 12px; align-items: center; translate: var(--label-x, 0px) var(--label-y, 0px); transition: translate .45s cubic-bezier(.22,1,.36,1); }
+.circle-button, .pill-button { isolation: isolate; overflow: hidden; }
+.circle-button::before, .pill-button::before { content: ''; position: absolute; inset: -40% -10%; border-radius: 50%; background: var(--blue); z-index: 0; transform: translateY(100%); transition: transform .6s cubic-bezier(.65,0,.35,1); }
+.pill-button { position: relative; }
+.circle-blue::before { background: #334bd3; }
+@media (hover: hover) and (pointer: fine) and (min-width: 721px) {
+  .has-floating-preview .project-row:not(:focus-visible) .project-cover { opacity: 0; visibility: hidden; }
+  .has-floating-preview .project-row:not(:focus-visible) { cursor: none; }
+  .has-floating-preview .project-row:hover h3, .has-floating-preview .project-row:hover .project-category { color: #b0b0b0; }
+  .has-floating-preview .project-row:hover h3 { transform: translateX(-20px); }
+  .circle-button:hover::before, .pill-button:hover::before { transform: translateY(0); }
+  .circle-dark:hover { background: var(--ink); }
+  .pill-button:hover, .contact-options .pill-button:hover { background: transparent; color: white; }
+  .circle-button, .pill-button { translate: var(--magnet-x, 0px) var(--magnet-y, 0px); transition: translate .65s cubic-bezier(.22,1,.36,1), background-color .3s, color .3s; }
+  .magnet-returning, .magnet-returning .magnetic-label { transition-timing-function: cubic-bezier(.2,1.6,.4,1); transition-duration: .85s; }
+  .hero[data-scroll-motion] .hero-portrait { transform: translate3d(0,var(--hero-parallax,0px),0) scale(1.14); }
+  .contact-section[data-scroll-motion] { overflow: clip; }
+  .contact-section[data-scroll-motion]::before { height: var(--footer-curve,35px); z-index: 2; }
+  .contact-section[data-scroll-motion] .contact-container { transform: translate3d(0,var(--contact-parallax,0px),0); }
+}
+.name-track[data-ready] { animation-duration: 18s; }
+@media (max-width: 720px) { .name-track[data-ready] { animation-duration: 22s; } }
+@media (max-width: 720px), (hover: none), (pointer: coarse) { .preview-layer { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .preview-layer { display: none; }
+  .magnetic-label, .pill-button { translate: none; }
+  .circle-button::before, .pill-button::before { display: none; }
+  .hero-portrait, .contact-container { transform: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-button:hover { background: var(--ink); color: white; }
+  .contact-options .pill-button:hover { background: white; color: var(--ink); }
+  .circle-dark:hover { background: var(--blue); }
+}

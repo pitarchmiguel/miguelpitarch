@@ -51,7 +51,7 @@ Las imágenes de `public/images/` son provisionales y se han convertido a WebP:
 - `miguel-studio.webp`: extensión de estudio asistida por IA a partir de `public/profile.png`. No representa una nueva sesión fotográfica real. Sustituir por un retrato propio de alta resolución antes de publicar una versión definitiva.
 - `palabrio.webp` y `qr-carta.webp`: portadas conceptuales generadas; no son capturas de las aplicaciones.
 
-Todos los efectos respetan `prefers-reduced-motion`, también al cambiar esa preferencia con la web abierta. Los efectos de puntero se limitan a ratón; el contenido sigue visible sin JavaScript. El nombre se puede pausar y detiene su animación fuera de pantalla.
+Todos los efectos respetan `prefers-reduced-motion`, también al cambiar esa preferencia con la web abierta. Los efectos de puntero se limitan a ratón; el contenido sigue visible sin JavaScript. El nombre se puede pausar, se detiene fuera de pantalla e invierte su dirección con el scroll. El seguimiento de proyectos, los botones y el pie curvo se han ajustado al vídeo facilitado por el usuario; la validación está en `docs/motion-checks.md`.
 
 ## Accesibilidad y comportamiento
 

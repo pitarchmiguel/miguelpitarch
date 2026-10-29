@@ -37,33 +37,30 @@ export function MotionEffects() {
         });
       }
       if (finePointer.matches) {
-        document.querySelectorAll<HTMLElement>('.circle-button, .project-row').forEach(element => {
-          const magnetic = element.classList.contains('circle-button');
+        document.querySelectorAll<HTMLElement>('.circle-button, .pill-button').forEach(element => {
+          const circular = element.classList.contains('circle-button');
           let frame = 0;
           let bounds: DOMRect | undefined;
-          const enter = () => { bounds = element.getBoundingClientRect(); };
+          const enter = () => { bounds = element.getBoundingClientRect(); element.classList.remove('magnet-returning'); };
           const move = (event: PointerEvent) => {
             if (event.pointerType !== 'mouse') return;
             bounds ??= element.getBoundingClientRect();
-            const x = event.clientX - bounds.left;
-            const y = event.clientY - bounds.top;
+            const x = event.clientX - bounds.left - bounds.width / 2;
+            const y = event.clientY - bounds.top - bounds.height / 2;
             cancelAnimationFrame(frame);
             frame = requestAnimationFrame(() => {
-              if (!bounds) return;
-              if (magnetic) {
-                element.style.setProperty('--magnet-x', `${Math.max(-12, Math.min(12, (x - bounds.width / 2) * .16))}px`);
-                element.style.setProperty('--magnet-y', `${Math.max(-12, Math.min(12, (y - bounds.height / 2) * .16))}px`);
-              } else {
-                element.style.setProperty('--preview-x', `${Math.max(bounds.width * .25, Math.min(bounds.width * .75, x))}px`);
-                element.style.setProperty('--preview-y', `${bounds.height / 2 + (y - bounds.height / 2) * .18}px`);
-                element.style.setProperty('--preview-angle', `${(x / bounds.width - .5) * 5}deg`);
-              }
+              const strength = circular ? .48 : .14;
+              const limit = circular ? 38 : 12;
+              element.style.setProperty('--magnet-x', `${Math.max(-limit, Math.min(limit, x * strength))}px`);
+              element.style.setProperty('--magnet-y', `${Math.max(-limit, Math.min(limit, y * strength))}px`);
+              element.style.setProperty('--label-x', `${Math.max(-10, Math.min(10, x * .12))}px`);
+              element.style.setProperty('--label-y', `${Math.max(-10, Math.min(10, y * .12))}px`);
             });
           };
           const leave = () => {
-            cancelAnimationFrame(frame);
-            bounds = undefined;
-            for (const name of ['--magnet-x', '--magnet-y', '--preview-x', '--preview-y', '--preview-angle']) element.style.removeProperty(name);
+            cancelAnimationFrame(frame); bounds = undefined;
+            element.classList.add('magnet-returning');
+            for (const name of ['--magnet-x', '--magnet-y', '--label-x', '--label-y']) element.style.removeProperty(name);
           };
           element.addEventListener('pointerenter', enter);
           element.addEventListener('pointermove', move);
@@ -72,8 +69,38 @@ export function MotionEffects() {
             element.removeEventListener('pointerenter', enter);
             element.removeEventListener('pointermove', move);
             element.removeEventListener('pointerleave', leave);
-            leave();
+            leave(); element.classList.remove('magnet-returning');
           });
+        });
+
+        const hero = document.querySelector<HTMLElement>('.hero');
+        const footer = document.querySelector<HTMLElement>('.contact-section');
+        let scrollFrame = 0;
+        const paintScroll = () => {
+          scrollFrame = 0;
+          if (hero) {
+            const rect = hero.getBoundingClientRect();
+            const offset = Math.max(0, Math.min(rect.height * .06, -rect.top * .18));
+            hero.style.setProperty('--hero-parallax', `${offset}px`);
+            hero.dataset.scrollMotion = 'true';
+          }
+          if (footer) {
+            const rect = footer.getBoundingClientRect();
+            const progress = Math.max(0, Math.min(1, (innerHeight - rect.top) / (Math.min(rect.height, innerHeight) * .9)));
+            footer.style.setProperty('--footer-curve', `${12 + (1 - progress) * 78}px`);
+            footer.style.setProperty('--contact-parallax', `${(1 - progress) * -64}px`);
+            footer.dataset.scrollMotion = 'true';
+          }
+        };
+        const onScroll = () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(paintScroll); };
+        paintScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        cleanups.push(() => {
+          cancelAnimationFrame(scrollFrame);
+          window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll);
+          if (hero) { delete hero.dataset.scrollMotion; hero.style.removeProperty('--hero-parallax'); }
+          if (footer) { delete footer.dataset.scrollMotion; footer.style.removeProperty('--footer-curve'); footer.style.removeProperty('--contact-parallax'); }
         });
       }
       dispose = () => cleanups.forEach(cleanup => cleanup());
