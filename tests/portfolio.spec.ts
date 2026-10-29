@@ -62,3 +62,26 @@ test('unknown projects return the custom 404', async ({ page }) => {
   await page.getByRole('link', { name: 'Volver al inicio' }).click();
   await expect(page).toHaveURL('/');
 });
+
+test('motion can be paused and respects reduced-motion preferences', async ({ page }) => {
+  await page.goto('/');
+  const track = page.locator('.name-track');
+  await expect(track).toHaveAttribute('data-ready', 'true');
+  const pause = page.getByRole('button', { name: 'Pausar movimiento del nombre' });
+  await pause.click();
+  await expect(page.getByRole('button', { name: 'Reanudar movimiento del nombre' })).toHaveAttribute('aria-pressed', 'true');
+  expect(await track.evaluate(element => getComputedStyle(element).animationPlayState)).toBe('paused');
+  await page.getByRole('button', { name: 'Reanudar movimiento del nombre' }).click();
+  expect(await track.evaluate(element => getComputedStyle(element).animationPlayState)).toBe('running');
+  await page.locator('#trabajos').scrollIntoViewIfNeeded();
+  await expect(page.locator('.project-row').first()).toHaveClass(/is-revealed/);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(pause).toBeHidden();
+  expect(await track.evaluate(element => getComputedStyle(element).animationName)).toBe('none');
+  await expect(page.locator('.motion-reveal')).toHaveCount(0);
+  await page.locator('.project-row').first().click();
+  await expect(page).toHaveURL('/proyectos/palabrio');
+  await page.getByRole('link', { name: 'Todos los proyectos' }).click();
+  await expect(page).toHaveURL('/#trabajos');
+  expect(await track.evaluate(element => getComputedStyle(element).animationName)).toBe('none');
+});

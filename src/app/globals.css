@@ -209,3 +209,50 @@ h1, h2, h3 { font-weight: 400; letter-spacing: -.045em; }
   .next-project { margin-bottom: 80px; padding-top: 35px; font-size: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+
+/* Phase two: restrained movement, without replacing native scrolling. */
+@keyframes name-marquee { to { transform: translateX(-50%); } }
+@keyframes drawer-enter { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes backdrop-enter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes menu-link-enter { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+.hero-name { pointer-events: none; }
+.name-track { display: flex; width: max-content; }
+.name-track[data-ready] { animation: name-marquee 38s linear infinite; }
+.hero-name .name-track > * { flex-shrink: 0; width: max-content; position: static; left: auto; transform: none; font-size: max(144px, 15vw); line-height: 1; letter-spacing: -.055em; white-space: nowrap; }
+.hero-name .name-track span { display: inline-block; padding: 0 3vw; }
+.motion-toggle { position: absolute; right: var(--gutter); bottom: 24px; display: inline-flex; align-items: center; gap: 8px; background: rgba(28,29,32,.7); color: white; padding: 10px 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 30px; font-size: 11px; letter-spacing: .02em; min-height: 40px; }
+.motion-toggle:hover { background: var(--ink); }
+.motion-reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s ease, transform .9s cubic-bezier(.22,1,.36,1); }
+.motion-reveal.is-revealed, .motion-reveal:focus-within { opacity: 1; transform: translateY(0); }
+.navigation-dialog[open] { animation: drawer-enter .6s cubic-bezier(.22,1,.36,1); }
+.navigation-dialog[open]::backdrop { animation: backdrop-enter .4s ease; }
+.navigation-dialog[open] .drawer-links a { animation: menu-link-enter .65s cubic-bezier(.22,1,.36,1) both; }
+.drawer-links a:nth-child(1) { animation-delay: .08s; }
+.drawer-links a:nth-child(2) { animation-delay: .13s; }
+.drawer-links a:nth-child(3) { animation-delay: .18s; }
+.drawer-links a:nth-child(4) { animation-delay: .23s; }
+.floating-menu { opacity: 0; transform: scale(.65); transition: opacity .25s ease, transform .4s cubic-bezier(.22,1,.36,1), visibility .25s, background-color .25s; }
+.floating-menu.is-visible { opacity: 1; transform: scale(1); }
+.circle-button { translate: var(--magnet-x, 0px) var(--magnet-y, 0px); transition: translate .35s cubic-bezier(.22,1,.36,1), background-color .3s; }
+.pill-button { transition: background-color .3s, color .3s, border-color .3s; }
+.pill-button svg, .project-arrow { transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .3s; }
+.pill-button:hover svg, .next-project:hover > svg { transform: translate(3px,-3px); }
+.next-project > svg, .project-row h3 { transition: transform .5s cubic-bezier(.22,1,.36,1), color .3s; }
+@media (hover: hover) and (pointer: fine) and (min-width: 721px) {
+  .project-cover { left: var(--preview-x, 50%); top: var(--preview-y, 50%); opacity: 0; transform: translate(-50%,-50%) scale(.85) rotate(var(--preview-angle, 0deg)); transition: opacity .3s, transform .5s cubic-bezier(.22,1,.36,1), left .25s ease-out, top .25s ease-out, visibility .3s; }
+  .project-row:hover .project-cover, .project-row:focus-visible .project-cover { opacity: 1; transform: translate(-50%,-50%) scale(1) rotate(var(--preview-angle, 0deg)); }
+  .project-row:hover h3 { transform: translateX(-12px); }
+}
+@media (max-width: 720px) {
+  .hero-name .name-track span { padding: 0 6vw; }
+  .name-track[data-ready] { animation-duration: 30s; }
+  .motion-toggle { bottom: 20px; min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .motion-toggle { display: none; }
+  .motion-reveal { opacity: 1; transform: none; }
+  .name-copy { display: none; }
+  .circle-button { translate: none; }
+  .project-row:hover h3 { transform: none; }
+}

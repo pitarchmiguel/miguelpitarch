@@ -1,5 +1,7 @@
 # STUDIO / 01 — Design QA
 
+Este informe conserva la revisión visual de la primera fase. La validación de los efectos añadidos posteriormente está en [docs/motion-checks.md](docs/motion-checks.md).
+
 final result: passed
 
 ## Scope and comparison target

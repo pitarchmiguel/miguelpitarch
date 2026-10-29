@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '@fontsource-variable/inter';
 import './globals.css';
+import { MotionEffects } from '@/components/motion-effects';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://miguelpitarch.com'),
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="es"><body><a href="#contenido" className="skip-link">Saltar al contenido</a>{children}</body></html>;
+  return <html lang="es"><body><a href="#contenido" className="skip-link">Saltar al contenido</a>{children}<MotionEffects/></body></html>;
 }

@@ -1,6 +1,6 @@
 # STUDIO / 01 — Miguel Pitarch
 
-Portfolio personal con Next.js App Router, TypeScript estricto y Tailwind CSS 4. Primera fase del diseño responsive: sin scroll virtual, cursores personalizados, transiciones de página, parallax ni animaciones complejas.
+Portfolio personal con Next.js App Router, TypeScript estricto y Tailwind CSS 4. Diseño responsive con una segunda fase de movimiento: nombre continuo con pausa, apariciones al hacer scroll, entrada del menú, botones magnéticos y previsualizaciones de proyectos que siguen suavemente al cursor. Se mantiene el scroll nativo y no se añaden dependencias de animación.
 
 ## Desarrollo
 
@@ -51,7 +51,7 @@ Las imágenes de `public/images/` son provisionales y se han convertido a WebP:
 - `miguel-studio.webp`: extensión de estudio asistida por IA a partir de `public/profile.png`. No representa una nueva sesión fotográfica real. Sustituir por un retrato propio de alta resolución antes de publicar una versión definitiva.
 - `palabrio.webp` y `qr-carta.webp`: portadas conceptuales generadas; no son capturas de las aplicaciones.
 
-La fase siguiente puede añadir los efectos de movimiento por separado, manteniendo alternativas con movimiento reducido.
+Todos los efectos respetan `prefers-reduced-motion`, también al cambiar esa preferencia con la web abierta. Los efectos de puntero se limitan a ratón; el contenido sigue visible sin JavaScript. El nombre se puede pausar y detiene su animación fuera de pantalla.
 
 ## Accesibilidad y comportamiento
 

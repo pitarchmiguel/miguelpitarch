@@ -4,6 +4,7 @@ import { ArrowDownRight, ArrowUpRight, Globe } from 'lucide-react';
 import { Navigation } from '@/components/navigation';
 import { Contact } from '@/components/contact';
 import { projects } from '@/lib/projects';
+import { HeroName } from '@/components/hero-name';
 
 export default function Home() {
   return <>
@@ -13,7 +14,7 @@ export default function Home() {
         <Image className="hero-portrait" src="/images/miguel-studio.webp" alt="Retrato de Miguel Pitarch. Imagen de estudio provisional creada a partir de su fotografía de perfil." fill priority sizes="(max-width: 720px) 160vh, 100vw"/>
         <div className="location-badge"><p>Desde<br/>Castellón,<br/>España</p><span className="globe-wrap"><Globe size={37} strokeWidth={1} aria-hidden="true"/></span></div>
         <div className="hero-role"><ArrowDownRight className="hero-arrow" size={27} strokeWidth={1.5} aria-hidden="true"/><p><span>Freelance</span>Web & Software Developer</p></div>
-        <div className="hero-name"><h1>Miguel Pitarch <span aria-hidden="true">—</span></h1></div>
+        <HeroName/>
         <Globe className="mobile-globe" size={40} strokeWidth={1} aria-hidden="true"/>
       </section>
       <section id="sobre-mi" className="intro-section" aria-labelledby="intro-title">
