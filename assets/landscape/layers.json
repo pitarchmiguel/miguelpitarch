@@ -1,0 +1,96 @@
+{
+ "width": 1920,
+ "height": 1200,
+ "layers": [
+  {
+   "src": "ridge-0.svg",
+   "x": -60,
+   "y": 608,
+   "w": 2040,
+   "h": 712,
+   "kind": "ridge",
+   "depth": 0.0
+  },
+  {
+   "src": "ridge-1.svg",
+   "x": -60,
+   "y": 671,
+   "w": 2040,
+   "h": 649,
+   "kind": "ridge",
+   "depth": 0.25
+  },
+  {
+   "src": "fog-1.svg",
+   "x": 0,
+   "y": 520,
+   "w": 3840,
+   "h": 340,
+   "kind": "fog",
+   "speed": 0.6
+  },
+  {
+   "src": "ridge-2.svg",
+   "x": -60,
+   "y": 699,
+   "w": 2040,
+   "h": 621,
+   "kind": "ridge",
+   "depth": 0.5
+  },
+  {
+   "src": "ridge-3.svg",
+   "x": -60,
+   "y": 770,
+   "w": 2040,
+   "h": 550,
+   "kind": "ridge",
+   "depth": 0.75
+  },
+  {
+   "src": "fog-3.svg",
+   "x": 0,
+   "y": 650,
+   "w": 3840,
+   "h": 400,
+   "kind": "fog",
+   "speed": 1.0
+  },
+  {
+   "src": "ridge-4.svg",
+   "x": -60,
+   "y": 859,
+   "w": 2040,
+   "h": 461,
+   "kind": "ridge",
+   "depth": 1.0
+  },
+  {
+   "src": "fog-4.svg",
+   "x": 0,
+   "y": 740,
+   "w": 3840,
+   "h": 440,
+   "kind": "fog",
+   "speed": 1.3
+  },
+  {
+   "src": "trees-l.svg",
+   "x": -360,
+   "y": 426,
+   "w": 840,
+   "h": 914,
+   "kind": "tree",
+   "side": "l"
+  },
+  {
+   "src": "trees-r.svg",
+   "x": 1440,
+   "y": 366,
+   "w": 840,
+   "h": 974,
+   "kind": "tree",
+   "side": "r"
+  }
+ ]
+}
