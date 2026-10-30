@@ -1,14 +1,184 @@
 <!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Miguel Pitarch — Desarrollo web y software a medida</title>
-    <meta name="description" content="Desarrollo webs y soluciones de software a medida para empresas y pequeños negocios. Tu idea, hecha realidad con Miguel Pitarch." />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Miguel Pitarch • Freelance Designer & Developer</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="description" content="Portfolio of Miguel Pitarch, freelance web designer and developer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Fallback si no tienes los ficheros de PP Neue Montreal en /fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;800&family=Newsreader:opsz,wght@6..72,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=9" />
+</head>
+<body>
+
+  <!-- ============ LOADER ============ -->
+  <div class="loader" aria-hidden="true">
+    <p class="loader__word"><span class="dot"></span><span class="loader__text">Hello</span></p>
+    <svg class="loader__curve" viewBox="0 0 1000 100" preserveAspectRatio="none">
+      <path d="M0 0 Q500 0 1000 0 L1000 0 L0 0 Z" />
+    </svg>
+  </div>
+
+  <!-- ============ CURSOR "VER" ============ -->
+  <div class="work-modal" aria-hidden="true">
+    <div class="work-modal__inner">
+      <div class="work-modal__slider">
+        <div class="work-modal__item" style="background:#1d1f24"><img src="https://picsum.photos/seed/berge/800/600" alt="" /></div>
+        <div class="work-modal__item" style="background:#e3e1dc"><img src="https://picsum.photos/seed/nutri/800/600" alt="" /></div>
+        <div class="work-modal__item" style="background:#cfd6d3"><img src="https://picsum.photos/seed/carta/800/600" alt="" /></div>
+        <div class="work-modal__item" style="background:#b5b9c4"><img src="https://picsum.photos/seed/motion/800/600" alt="" /></div>
+      </div>
+    </div>
+  </div>
+  <div class="cursor-view" aria-hidden="true"><span>View</span></div>
+
+  <!-- ============ BURGER FIJO + MENÚ ============ -->
+  <button class="burger magnetic" aria-label="Open menu" aria-expanded="false">
+    <span class="btn-fill"></span>
+    <span class="burger__lines"></span>
+  </button>
+
+  <div class="menu-overlay"></div>
+  <aside class="menu" aria-hidden="true">
+    <svg class="menu__curve" viewBox="0 0 100 1000" preserveAspectRatio="none">
+      <path d="M100 0 L100 1000 Q-100 500 100 0" />
+    </svg>
+    <div class="menu__inner">
+      <p class="menu__label">Navigation</p>
+      <ul class="menu__links">
+        <li><a href="#top" class="is-active"><span class="menu__dot"></span>Home</a></li>
+        <li><a href="#work"><span class="menu__dot"></span>Work</a></li>
+        <li><a href="#about"><span class="menu__dot"></span>About</a></li>
+        <li><a href="#contact"><span class="menu__dot"></span>Contact</a></li>
+      </ul>
+      <div class="menu__socials">
+        <p class="menu__label">Socials</p>
+        <ul>
+          <li><a href="https://www.instagram.com/itspitarch/" target="_blank" rel="noopener" class="link-line">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/in/miguelpitarch/" target="_blank" rel="noopener" class="link-line">LinkedIn</a></li>
+          <li><a href="https://x.com/itspitarch" target="_blank" rel="noopener" class="link-line">X</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <header class="nav">
+        <a href="#top" class="logo">
+          <span class="logo__c">©</span>
+          <span class="logo__roll">
+            <span class="logo__code">Code by</span>
+            <span class="logo__name">Miguel</span>
+            <span class="logo__full">Pitarch</span>
+          </span>
+        </a>
+        <nav class="nav__links">
+          <a href="#work" class="magnetic nav__link"><span>Work</span></a>
+          <a href="#about" class="magnetic nav__link"><span>About</span></a>
+          <a href="#contact" class="magnetic nav__link"><span>Contact</span></a>
+        </nav>
+      </header>
+
+      <div class="hero__bg">
+        <img src="assets/hero-landscape.svg" alt="" />
+      </div>
+
+      <div class="hero__content">
+        <a href="#contact" class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Available for new projects · 2026
+          <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1.5 1l5 5-5 5" /></svg>
+        </a>
+        <h1 class="hero__title">
+          <span class="hero__line"><span>Software that feels simple.</span></span>
+          <span class="hero__line"><span>Built to scale from day one.</span></span>
+        </h1>
+        <p class="hero__sub">Freelance software developer &amp; designer based in Spain</p>
+        <a href="#contact" class="hero__cta magnetic"><span class="btn-fill"></span><span class="btn-text">Let’s talk</span></a>
+      </div>
+    </section>
+
+    <!-- ============ INTRO ============ -->
+    <section class="intro" id="about">
+      <div class="container intro__grid">
+        <h2 class="intro__big split-words">Helping brands stand out in the digital era. Together we will set the new standard. No nonsense, always on the cutting edge.</h2>
+        <div class="intro__side">
+          <p class="fade-up">The combination of my passion for design, code &amp; interaction puts me in a unique place in the web design world.</p>
+          <a href="#contact" class="btn-round btn-round--dark magnetic" data-parallax-speed="-0.15">
+            <span class="btn-fill"></span><span class="btn-text">About me</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRABAJOS ============ -->
+    <section class="work" id="work">
+      <div class="container">
+        <p class="eyebrow">Recent work</p>
+        <ul class="work__list">
+          <li class="work__row" data-index="0"><a href="#"><h3>Berge</h3><p>Design &amp; Development</p></a></li>
+          <li class="work__row" data-index="1"><a href="#"><h3>Nutriplan</h3><p>Design &amp; Development</p></a></li>
+          <li class="work__row" data-index="2"><a href="#"><h3>Carta</h3><p>Interaction &amp; Development</p></a></li>
+          <li class="work__row" data-index="3"><a href="#"><h3>Motion Demo</h3><p>Design &amp; Motion</p></a></li>
+        </ul>
+        <div class="center-btn">
+          <a href="#" class="btn-pill magnetic"><span class="btn-fill"></span><span class="btn-text">More work <sup>12</sup></span></a>
+        </div>
+      </div>
+      <!-- borde curvo que se aplana al hacer scroll -->
+      <div class="curve-wrap"><div class="curve"></div></div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" id="contact">
+    <div class="container footer__top">
+      <div class="footer__title">
+        <h2>Let’s work<br />together</h2>
+      </div>
+      <svg class="footer__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M1 1l12 12M13 3v10H3" /></svg>
+      <div class="footer__line">
+        <a href="mailto:hello@miguelpitarch.com" class="btn-round btn-round--blue magnetic footer__cta" data-strength="0.5">
+          <span class="btn-fill"></span><span class="btn-text">Get in touch</span>
+        </a>
+      </div>
+      <div class="footer__pills">
+        <a href="mailto:hello@miguelpitarch.com" class="btn-pill btn-pill--outline magnetic"><span class="btn-fill"></span><span class="btn-text">hello@miguelpitarch.com</span></a>
+        <a href="tel:+34625201686" class="btn-pill btn-pill--outline magnetic"><span class="btn-fill"></span><span class="btn-text">+34 625 201 686</span></a>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <div class="footer__meta">
+        <div>
+          <p class="footer__label">Version</p>
+          <p>2026 © Edition</p>
+        </div>
+        <div>
+          <p class="footer__label">Local time</p>
+          <p class="local-time">--:-- CET</p>
+        </div>
+      </div>
+      <div class="footer__socials">
+        <p class="footer__label">Socials</p>
+        <ul>
+          <li><a href="https://www.instagram.com/itspitarch/" target="_blank" rel="noopener" class="link-line">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/in/miguelpitarch/" target="_blank" rel="noopener" class="link-line">LinkedIn</a></li>
+          <li><a href="https://x.com/itspitarch" target="_blank" rel="noopener" class="link-line">X</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="main.js?v=8"></script>
+</body>
 </html>
