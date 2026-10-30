@@ -76,51 +76,126 @@ function setupHero() {
 }
 
 /* ---------------- Paisaje del hero por capas ---------------- */
-// Se inyecta el SVG en línea para poder animar cada cresta, la niebla y los pinos.
-async function loadLandscape() {
-  const bg = $(".hero__bg");
-  try {
-    const res = await fetch("assets/hero-landscape.svg");
-    bg.innerHTML = await res.text();
-  } catch (e) {
-    /* si falla, se queda la <img> estática */
-  }
+// Cada capa es un elemento propio (<img> o <div>) dentro de un "escenario" 1920×1200
+// escalado tipo cover. Las imágenes se decodifican una vez durante el loader y luego
+// solo se mueven con transform, que lo hace la GPU sin volver a pintar nada.
+const STAGE_W = 1920;
+const STAGE_H = 1200;
+let stageScale = 1;
+const pct = (v, total) => `${(v / total) * 100}%`;
+
+function addLayer(stage, cls, box) {
+  const el = document.createElement("div");
+  el.className = `lx ${cls}`;
+  if (box) Object.assign(el.style, { left: pct(box.x, STAGE_W), top: pct(box.y, STAGE_H), width: pct(box.w, STAGE_W), height: pct(box.h, STAGE_H) });
+  stage.appendChild(el);
+  return el;
 }
 
-function landscapeIn() {
-  const ridges = $$(".lx-ridge > path");
-  if (!ridges.length) return;
-  gsap.from(".lx-sky", { y: -80, duration: 2.6, ease: "power3.out" });
-  gsap.from(".lx-glow", { opacity: 0, scale: 0.6, transformOrigin: "50% 50%", duration: 3, ease: "power2.out", delay: 0.2 });
-  // de atrás hacia delante: las cercanas suben desde más abajo
-  ridges.forEach((path, i) => {
-    const depth = parseFloat(path.parentNode.dataset.depth);
-    gsap.from(path, { y: 120 + depth * 320, duration: 2.2 + depth * 0.4, ease: "power3.out", delay: 0.05 + i * 0.09 });
+async function loadLandscape() {
+  const stage = $(".hero__stage");
+  if (!stage) return;
+  let manifest;
+  try {
+    manifest = await (await fetch("assets/landscape/layers.json")).json();
+  } catch (e) {
+    return; // sin capas se queda el degradado del cielo
+  }
+
+  addLayer(stage, "lx-sky");
+  addLayer(stage, "lx-glow");
+  const decodes = [];
+  manifest.layers.forEach((l) => {
+    if (l.kind === "tree" && !$(".lx-ground", stage)) addLayer(stage, "lx-ground");
+    const el = addLayer(stage, `lx-${l.kind}${l.side ? ` lx-tree-${l.side}` : ""}`, l);
+    if (l.depth !== undefined) el.dataset.depth = l.depth;
+    if (l.speed !== undefined) el.dataset.speed = l.speed;
+    const img = new Image();
+    img.alt = "";
+    img.decoding = "async";
+    img.src = `assets/landscape/${l.src}`;
+    el.appendChild(img);
+    decodes.push(img.decode().catch(() => {}));
   });
-  gsap.from(".lx-fog", { opacity: 0, duration: 3, ease: "power2.out", delay: 0.7 });
-  gsap.from(".lx-tree-l > path", { x: -320, duration: 2.2, ease: "power3.out", stagger: 0.08, delay: 0.35 });
-  gsap.from(".lx-tree-r > path", { x: 320, duration: 2.2, ease: "power3.out", stagger: 0.08, delay: 0.35 });
+
+  setGrain();
+  sizeStage();
+  await Promise.all(decodes);
+}
+
+// Grano de película: una textura pequeña generada una vez (antes era un filtro SVG en vivo)
+function setGrain() {
+  const c = document.createElement("canvas");
+  c.width = c.height = 160;
+  const ctx = c.getContext("2d");
+  const img = ctx.createImageData(160, 160);
+  for (let i = 0; i < img.data.length; i += 4) {
+    const v = 110 + Math.random() * 40;
+    img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+    img.data[i + 3] = Math.random() * 22;
+  }
+  ctx.putImageData(img, 0, 0);
+  $(".hero__grain").style.backgroundImage = `url(${c.toDataURL()})`;
+}
+
+function sizeStage() {
+  const hero = $(".hero");
+  const stage = $(".hero__stage");
+  if (!stage) return;
+  const w = hero.clientWidth;
+  const h = hero.clientHeight;
+  stageScale = Math.max(w / STAGE_W, h / STAGE_H);
+  Object.assign(stage.style, {
+    width: `${STAGE_W * stageScale}px`,
+    height: `${STAGE_H * stageScale}px`,
+    left: `${(w - STAGE_W * stageScale) / 2}px`,
+    top: `${(h - STAGE_H * stageScale) / 2}px`,
+  });
+}
+
+// valores en unidades del paisaje → px en pantalla
+const u = (v) => () => v * stageScale;
+
+function landscapeIn() {
+  const ridges = $$(".lx-ridge > img");
+  if (!ridges.length) return;
+  gsap.from(".lx-glow", { opacity: 0, scale: 0.6, duration: 3, ease: "power2.out", delay: 0.2 });
+  // de atrás hacia delante: las cercanas suben desde más abajo
+  ridges.forEach((img, i) => {
+    const depth = parseFloat(img.parentNode.dataset.depth);
+    gsap.from(img, { y: u(120 + depth * 320), duration: 2.2 + depth * 0.4, ease: "power3.out", delay: 0.05 + i * 0.09 });
+  });
+  gsap.from(".lx-fog > img", { opacity: 0, duration: 3, ease: "power2.out", delay: 0.7 });
+  gsap.from(".lx-tree-l > img", { x: u(-320), duration: 2.2, ease: "power3.out", delay: 0.35 });
+  gsap.from(".lx-tree-r > img", { x: u(320), duration: 2.2, ease: "power3.out", delay: 0.35 });
 }
 
 function setupLandscape() {
   if (!$(".lx-ridge")) return;
-  const st = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
+  const st = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true, invalidateOnRefresh: true };
 
   // parallax: lo lejano casi no se mueve respecto a la pantalla, lo cercano sí
-  gsap.to(".lx-sky", { y: 420, ease: "none", scrollTrigger: st });
-  gsap.to(".lx-glow", { y: 380, opacity: 0.4, ease: "none", scrollTrigger: st });
-  $$(".lx-ridge").forEach((g) => {
-    const depth = parseFloat(g.dataset.depth);
-    gsap.to(g, { y: (1 - depth) * 360 + 40, ease: "none", scrollTrigger: st });
+  gsap.to(".lx-sky", { y: u(420), ease: "none", scrollTrigger: st });
+  gsap.to(".lx-glow", { y: u(380), opacity: 0.4, ease: "none", scrollTrigger: st });
+  $$(".lx-ridge").forEach((el) => {
+    const depth = parseFloat(el.dataset.depth);
+    gsap.to(el, { y: u((1 - depth) * 360 + 40), ease: "none", scrollTrigger: st });
   });
-  $$(".lx-fog").forEach((g) => gsap.to(g, { y: 200, ease: "none", scrollTrigger: st }));
-  gsap.to(".lx-tree-l", { x: -140, y: -60, ease: "none", scrollTrigger: st });
-  gsap.to(".lx-tree-r", { x: 140, y: -60, ease: "none", scrollTrigger: st });
+  gsap.to(".lx-fog", { y: u(200), ease: "none", scrollTrigger: st });
+  gsap.to(".lx-tree-l", { x: u(-140), y: u(-60), ease: "none", scrollTrigger: st });
+  gsap.to(".lx-tree-r", { x: u(140), y: u(-60), ease: "none", scrollTrigger: st });
 
-  // niebla desplazándose en bucle (cada banda mide 2×ancho)
-  $$(".lx-fog").forEach((g) => {
-    const speed = parseFloat(g.dataset.speed || 1);
-    gsap.to(g, { x: -1920, duration: 120 / speed, ease: "none", repeat: -1 });
+  // niebla desplazándose en bucle: la imagen mide 2×ancho, así que -50% es un ciclo exacto
+  $$(".lx-fog > img").forEach((img) => {
+    const speed = parseFloat(img.parentNode.dataset.speed || 1);
+    gsap.to(img, { xPercent: -50, duration: 120 / speed, ease: "none", repeat: -1 });
+  });
+
+  // el escenario no necesita animarse cuando el hero ya no se ve
+  ScrollTrigger.create({
+    trigger: ".hero", start: "top top", end: "bottom top",
+    onLeave: () => gsap.set(".hero__bg", { visibility: "hidden" }),
+    onEnterBack: () => gsap.set(".hero__bg", { visibility: "visible" }),
   });
 }
 
@@ -288,6 +363,7 @@ Promise.all([document.fonts.ready, loadLandscape()]).then(() => {
 });
 addEventListener("resize", () => {
   setupLogo();
+  sizeStage();
   if (!menuOpen) gsap.set(".menu", { x: menuHiddenX });
   ScrollTrigger.refresh();
 });
