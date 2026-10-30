@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <!-- Retrato placeholder: busto neutro, monocromo, estilo foto de estudio -->
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a8e92"/>
+      <stop offset="1" stop-color="#6c7075"/>
+    </linearGradient>
+    <linearGradient id="neck" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5f6368"/>
+      <stop offset="1" stop-color="#6e7277"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3c3f44"/>
+      <stop offset="1" stop-color="#2f3236"/>
+    </linearGradient>
+    <linearGradient id="sweater" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b2e33"/>
+      <stop offset="1" stop-color="#1e2024"/>
+    </linearGradient>
+    <radialGradient id="light" cx="0.38" cy="0.32" r="0.6">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Torso / jersey -->
+  <path d="M10 900 C22 755 92 688 205 660 C243 650 263 632 268 604 L332 604 C337 632 357 650 395 660 C508 688 578 755 590 900 Z" fill="url(#sweater)"/>
+  <path d="M120 900 C130 820 150 760 175 720" stroke="#17191c" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M480 900 C470 820 450 760 425 720" stroke="#17191c" stroke-width="3" fill="none" opacity="0.5"/>
+
+  <!-- Cuello -->
+  <path d="M256 545 L344 545 L346 640 C322 664 278 664 257 640 Z" fill="url(#neck)"/>
+  <ellipse cx="300" cy="560" rx="48" ry="16" fill="#54585c" opacity="0.6"/>
+
+  <!-- Cuello del jersey -->
+  <path d="M248 638 C270 676 330 676 352 638 C348 662 324 692 300 692 C276 692 252 662 248 638 Z" fill="#16181b"/>
+
+  <g transform="translate(0 32)">
+  <!-- Orejas -->
+  <ellipse cx="196" cy="415" rx="15" ry="28" fill="#6f7378"/>
+  <ellipse cx="404" cy="415" rx="15" ry="28" fill="#6a6e73"/>
+
+  <!-- Cabeza -->
+  <ellipse cx="300" cy="400" rx="106" ry="134" fill="url(#skin)"/>
+  <ellipse cx="300" cy="400" rx="106" ry="134" fill="url(#light)"/>
+
+  <!-- Pelo -->
+  <path d="M193 392 C186 292 240 252 302 252 C368 252 416 292 407 388 C398 336 364 306 302 306 C246 306 205 330 193 392 Z" fill="url(#hair)"/>
+  <path d="M302 306 C330 300 372 312 392 342 C370 322 338 316 302 318 Z" fill="#45484d" opacity="0.6"/>
+
+  </g>
+
+  <!-- Volumen del jersey -->
+  <path d="M10 900 C22 755 92 688 205 660 C243 650 263 632 268 604 L300 604 L300 900 Z" fill="#fff" opacity="0.03"/>
+</svg>
