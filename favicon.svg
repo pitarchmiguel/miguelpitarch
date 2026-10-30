@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#b6f6cf"/><text x="7" y="43" font-family="Arial,sans-serif" font-size="34" font-weight="bold" letter-spacing="-4" fill="#181b19">mp</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>@media (prefers-color-scheme: dark) { .bg { fill: #2c2e33; } }</style>
+  <rect class="bg" width="64" height="64" rx="15" fill="#1c1d20"/>
+  <path d="M14.5 45V19.5h1.2L28 36.2 40.3 19.5h1.2V45" fill="none" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="51" cy="42.6" r="4.4" fill="#455ce9"/>
+</svg>
